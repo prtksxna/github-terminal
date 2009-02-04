@@ -13,15 +13,24 @@ a{
 	text-decoration: none;
 	color: #DF341E;
 }
+.red{
+	color: #DF341E;;
+}
 form{
 	margin: 0;
 	padding: 0;
 }
-a.green{
+.green{
 	color: #49A321;
 }
-a.yellow{
+.yellow{
 	color:#DAD433;
+}
+.pink{
+	color: #9C24A4;
+}
+.blue{
+	color: #46B3F8;
 }
 .com{
 	color:#0824F4;
