@@ -2,10 +2,29 @@ body{
 	background: #000;
 	color: #fff;
 	font: 12px 'Lucida Console', 'Courier New', Courier, monospace;
+	text-align: center;
+}
+#terminal_keeper{
+	width: 700px;
+	margin: 0 auto;
+	text-align: left;
 }
 a{
 	text-decoration: none;
 	color: #DF341E;
+}
+form{
+	margin: 0;
+	padding: 0;
+}
+a.green{
+	color: #49A321;
+}
+a.yellow{
+	color:#DAD433;
+}
+.com{
+	color:#0824F4;
 }
 .loading{
 	text-decoration: blink;
@@ -18,5 +37,6 @@ input{
 	border: none;
 }
 #terminal_folder{
-	color: #C896F9;
+	color: #0824f4;
+	float: left;
 }
