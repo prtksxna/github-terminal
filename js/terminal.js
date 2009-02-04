@@ -1,4 +1,4 @@
-GIT_USER = "sstephenson";
+GIT_USER = "defunkt";
 
 Terminal = Class.create({
 	initialize: function(user){
@@ -7,7 +7,6 @@ Terminal = Class.create({
 	},
 	connection: function(data){
 		this.userdata = data
-		console.log(data);
 		$("terminal_console").update("Welcome to ~\/github\/<a href=\'http://github.com/"+this.userdata.user.login+"\'>"+this.userdata.user.login+"<\/a>\/ <br\/> <br\/>");
 		this.loc = "~/github/"+this.userdata.user.login
 		$("terminal_folder").update(this.loc+"$<span class=\'loading\'>><\/span>");
@@ -34,7 +33,7 @@ Terminal = Class.create({
 			list += "<\/table>"
 			repEl.update(list);
 			git.addData(repEl);
-		}})
+		}});
 	},
 	exec: function(command){
 		var comEl = new Element('span', {class:'com'});
