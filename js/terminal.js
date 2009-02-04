@@ -1,3 +1,5 @@
+GIT_USER = "sstephenson";
+
 Terminal = Class.create({
 	initialize: function(user){
 		this.user = user;
@@ -39,18 +41,26 @@ Terminal = Class.create({
 		comEl.update(""+ this.loc +">" + command);
 		this.addData(comEl);
 		var com = (this.commands.get(command));
-		com.exec();
-		$("terminal_input").activate().value = "";
+
+		if (!com){
+			this.addData("<br \/>No such command <br \/>");
+		}else{
+			com.exec();
+		}
+		
+		$("terminal_input").value = "";
+		Effect.ScrollTo("terminal_input");
 	},
 	getData: function(url,callback){
 		var sc = new Element('script', {src:url+"="+callback});
 		$(document.body).insert(sc);
 	},
 });
-git = new Terminal('prtksxna'); 
+
+git = new Terminal(GIT_USER); 
 
 document.observe('dom:loaded',function(e) {
-	var sc = new Element('script', {src:'http://github.com/api/v1/json/defunkt?callback=initTerm'});
+	var sc = new Element('script', {src:'http://github.com/api/v1/json/'+GIT_USER+'?callback=initTerm'});
 	$(document.body).insert(sc);
 	
 	$("term_in").observe('submit',function(e) {
@@ -59,7 +69,6 @@ document.observe('dom:loaded',function(e) {
 	});
 	
 });
-
 
 initTerm = function(data) {
 	git.connection(data);
