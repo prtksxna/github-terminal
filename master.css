@@ -3,3 +3,20 @@ body{
 	color: #fff;
 	font: 12px 'Lucida Console', 'Courier New', Courier, monospace;
 }
+a{
+	text-decoration: none;
+	color: #DF341E;
+}
+.loading{
+	text-decoration: blink;
+	color: #C4FAFD;
+}
+input{
+	background: #000;
+	color: #fff;
+	font: 12px 'Lucida Console', 'Courier New', Courier, monospace;
+	border: none;
+}
+#terminal_folder{
+	color: #C896F9;
+}
