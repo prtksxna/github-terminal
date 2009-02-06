@@ -1,6 +1,6 @@
 h1. What's this?
 
-A small fun application that uses the Gihub API, to display a terminal like interface on the web page. You run commands that allow you to list all the commits of a user and the commits made by them.
+A small fun application that uses the Gihub API, to display a terminal like interface on the web page. You run commands that allow you to list all the repositories of a user and the commits made by them.
 
 h2. Installation/Usage
 
