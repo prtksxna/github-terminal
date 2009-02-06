@@ -85,9 +85,13 @@ Terminal = Class.create({
 			
 		}});
 		
+		this.commands.set('clear',{help:'Clears the scree', exec: function(){
+			$("terminal_console").update();
+		}});
+		
 		this.commands.set('git', {help:'<ul><li><b>log<\/b>: Gives a list of all the recent commits.<\/li><li><b>diff<\/b>: Followed by the SHA1 of the commit gives the changes made in the commit.<\/li><\/ul>', exec: function(command){
-			command = command.reduce();
-			if(command == "log"){
+			commands = command.reduce();
+			if(commands == "log"){
 				var where = git.loc.split("/");
 				if (where.length == 3){
 					var emp = new Element("div").update("Cant run git log here. Enter a repository to run it.");
@@ -96,16 +100,24 @@ Terminal = Class.create({
 					git.getData('http://github.com/api/v1/json/'+git.userdata.user.login+'/'+where[3]+'/commits/master',"git.commands.get('git').log")
 					$("terminal_console").setStyle({textDecoration:'blink'});
 				}
-
+			}
+			if(command[0] == "diff"){
+				var where = git.loc.split("/");
+				if (where.length == 3){
+					var emp = new Element("div").update("Cant run git here here. Enter a repository to run it.");
+					git.addData(emp);
+				}else{
+					git.getData('http://github.com/api/v1/json/'+git.userdata.user.login+'/'+where[3]+'/commit/'+command[1],"git.commands.get('git').diff")
+					$("terminal_console").setStyle({textDecoration:'blink'});
+				}
 			}
 		},
 		log: function(data){
 			$("terminal_console").setStyle({textDecoration:'none'});
-			console.log(data);
 			var log = ""
 			data.commits.each(function(el) {
 				log += "<div>";
-				log += "<a href=\'"+el.url+"\' class=\'yellow\'>commit "+el.id+"<\/a>";
+				log += "<a href=\'"+el.url+"\' class=\'yellow\'>commit <\/a>"+el.id;
 				log += "<br \/><a href=\'mailto:"+el.author.email+"\' class=\'green\'>Author: "+el.author.name+" ["+el.author.email+"]<\/a>";
 				log += "<br \/>Date: "+el.committed_date;
 				log += "<blockquote class=\'pink\'>"+el.message+"<\/blockquote>";
@@ -114,6 +126,30 @@ Terminal = Class.create({
 			var logEl = new Element('div').update(log);
 			git.addData(logEl);
 			Effect.ScrollTo("the_end");
+		},
+		diff: function(data){
+			$("terminal_console").setStyle({textDecoration:'none'});
+			console.log(data);
+			var commit = "<div>";
+			commit += "<blockquote class=\'pink\'>"+data.commit.message+"<\/blockquote>";
+			commit += "<a href=\'"+data.commit.url+"\' class=\'yellow\'>commit "+data.commit.id+"<\/a>";
+			commit += "<br \/><span class=\'pink\'>Modified:";
+			data.commit.modified.each(function(el) {
+				commit += "<br \/>*"+el.filename;
+			});
+			
+			commit += "<br \/><span class=\'green\'>Added:";
+			data.commit.added.each(function(el) {
+				commit += "<br \/>+"+el.filename;
+			});
+			commit += "<br \/><span class=\'red\'>Removed:";
+			data.commit.removed.each(function(el) {
+				commit += "<br \/>-<del>"+el.filename+"<\/del>";
+			});
+			commit+= "<\/span>";
+			commit +=  "<\/div>";
+			var commitEl = new Element('div').update(commit);
+			git.addData(commitEl);
 		}});
 	},
 	exec: function(command){

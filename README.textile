@@ -1,0 +1,74 @@
+h1. What's this?
+
+A small fun application that uses the Gihub API, to display a terminal like interface on the web page. You run commands that allow you to list all the commits of a user and the commits made by them.
+
+h2. Installation/Usage
+
+Copy all the files into your Github user page's repository or wherever you are planning to host it. Open @js/terminal.js@, and change the @GIT_USER@ variable to your own username.
+
+h2. How to write you own commands?
+
+Its pretty easy to write your own commands once you understand how the @Terminal@ object parses the input and how other commands are written. The @Terminal@ class has a @Terminal.commands@ hash object which has hash objects inside it containing information about the command. The default commands are written into the object when the @Terminal.addDefaultCommands()@ method is run after initialization. You can either write you command's code inside this method or modify the @Terminal.commands@ from your own methods.
+
+Thus to make a new command you write - 
+
+<pre>
+  this.commands.set('command_name',{<attributes>};
+</pre>
+
+h4. Command Attributes
+
+table{vertical-align: top}.
+|Name|Value|Description|
+|help|String|Give a small description about the usage of the command. This is what will show up when the `help` function is run by the user|
+|exec|function(arguments)|This is where you'll write your command's code. If your commands was preceded by any arguments, for example "git log" or "git diff SHA1", the arguments will be passed to the function inside an array|
+|Any other function|function()|If your commands needs multiple functions you can also make it a part of this hash|
+
+Thus, the @whois@ command was a written like this - 
+
+<pre>
+  this.commands.set('whois',{help:'Gives you information about the user.',exec: function(){
+    var whois = new Element('div',{class:'info'}).update(git.userdata.user.name+", "+git.userdata.user.company+" ("+git.userdata.user.login+") \t <a href=\'"+git.userdata.user.blog+"\'>"+git.userdata.user.blog+"<\/a> <br> <a class=\'green\' href=\'mailto:"+git.userdata.user.email+"\'>"+git.userdata.user.email+"<\/a>");
+    git.addData(whois);
+	}});
+</pre>
+
+The @git.addData(elem)@, method takes an elements which it renders onto the terminal. Here @git@ is the name of the object that has inherited from @Terminal@, it has been set as global variable so that callbacks can be made easily when a commands uses the API.
+
+
+h2. License
+
+Github's API terminal, "github-terminal" is licensed under the terms of the MIT license.
+
+<pre style="background: #EBF1F4;border: 1px solid #DDD;">
+  Copyright (c) 2009 Prateek Saxena
+
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation
+  files (github-terminal), to deal in github-terminal without
+  restriction, including without limitation the rights to use,
+  copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of it, and to permit persons to whom it
+  is furnished to do so, subject to the following
+  conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+  OTHER DEALINGS IN THE SOFTWARE.
+</pre>
+
+
+
+h2. Dependencies
+
+# "Prototype":http://github.com/sstephenson/prototype/tree/master
+# "Scriptaculous":http://github.com/madrobby/scriptaculous/tree/master
+
