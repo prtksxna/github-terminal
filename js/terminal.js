@@ -1,4 +1,4 @@
-GIT_USER = "prtksxna";
+GIT_USER = "your_username";
 
 Terminal = Class.create({
 	initialize: function(user){
