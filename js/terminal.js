@@ -1,4 +1,4 @@
-GIT_USER = "your_username";
+GIT_USER = "prtksxna";
 
 Terminal = Class.create({
 	initialize: function(user){
@@ -22,7 +22,11 @@ Terminal = Class.create({
 	},
 	addDefaultCommands: function(){
 		this.commands.set('whois',{help:'Gives you information about the user.',exec: function(){
-			var whois = new Element('div',{class:'info'}).update(git.userdata.user.name+", "+git.userdata.user.company+" ("+git.userdata.user.login+") \t <a href=\'"+git.userdata.user.blog+"\'>"+git.userdata.user.blog+"<\/a> <br> <a class=\'green\' href=\'mailto:"+git.userdata.user.email+"\'>"+git.userdata.user.email+"<\/a>");
+			var company = git.userdata.user.company ? git.userdata.user.company:"No Company";
+			var name = git.userdata.user.name ? git.userdata.user.name:git.userdata.user.login;
+			var blog = git.userdata.user.blog ? git.userdata.user.blog:"No Blog"
+			var url  = git.userdata.user.blog ? git.userdata.user.blog:"#"
+			var whois = new Element('div',{class:'info'}).update(name+", "+company+" ("+git.userdata.user.login+") \t <a href=\'"+url+"\'>"+blog+"<\/a> <br> <a class=\'green\' href=\'mailto:"+git.userdata.user.email+"\'>"+git.userdata.user.email+"<\/a>");
 			git.addData(whois);
 		}});
 		
@@ -37,7 +41,19 @@ Terminal = Class.create({
 				var emp = new Element("div");
 				git.addData(emp);
 			}
-			
+		}});
+		
+		this.commands.set('gitk', {help:'Shows the network graph of the repository you are in.', exec: function(){
+			var where = git.loc.split("/");
+			var message;
+			if (where.length === 3) {
+				message = "Can run \'gitk\' on the user";
+			}else{
+				var ref = window.open("http://github.com/"+git.userdata.user.login+"/"+where[3]+"/network");
+				message = "";
+			};
+			var emp = new Element('div').update(message);
+			git.addData(emp);
 		}});
 		
 		this.commands.set('help',{help:'Helps those who cant help themselves.', exec: function(){
