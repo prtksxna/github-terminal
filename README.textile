@@ -10,7 +10,7 @@ h2. How to write you own commands?
 
 Its pretty easy to write your own commands once you understand how the @Terminal@ object parses the input and how other commands are written. The @Terminal@ class has a @Terminal.commands@ hash object which has hash objects inside it containing information about the command. The default commands are written into the object when the @Terminal.addDefaultCommands()@ method is run after initialization. You can either write you command's code inside this method or modify the @Terminal.commands@ from your own methods.
 
-Thus to make a new command you write - 
+Thus to make a new command you write -
 
 <pre>
   this.commands.set('command_name',{<attributes>};
@@ -24,7 +24,7 @@ table{vertical-align: top}.
 |exec|function(arguments)|This is where you'll write your command's code. If your commands was preceded by any arguments, for example "git log" or "git diff SHA1", the arguments will be passed to the function inside an array|
 |Any other function|function()|If your commands needs multiple functions you can also make it a part of this hash|
 
-Thus, the @whois@ command was a written like this - 
+Thus, the @whois@ command was a written like this -
 
 <pre>
   this.commands.set('whois',{help:'Gives you information about the user.',exec: function(){
@@ -71,4 +71,3 @@ h2. Dependencies
 
 # "Prototype":http://github.com/sstephenson/prototype/tree/master
 # "Scriptaculous":http://github.com/madrobby/scriptaculous/tree/master
-
