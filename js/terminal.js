@@ -101,7 +101,7 @@ Terminal = Class.create({
 
 	}});
 
-	this.commands.set('clear',{help:'Clears the scree', exec: function () {
+	this.commands.set('clear',{help:'Clears the screen', exec: function () {
 	    $("terminal_console").update();
 	}});
 
